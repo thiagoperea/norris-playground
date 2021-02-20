@@ -2,11 +2,16 @@ package com.thiagoperea.norrisplayground.presentation.screens
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.thiagoperea.norrisplayground.presentation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(binding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
+
 }
