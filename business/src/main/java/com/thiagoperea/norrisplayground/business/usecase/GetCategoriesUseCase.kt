@@ -6,5 +6,9 @@ class GetCategoriesUseCase(
     private val jokesRepository: JokesRepository
 ) {
 
-    suspend fun execute() = jokesRepository.getCategories()
+    suspend fun execute(): MutableList<String> {
+        val categories = jokesRepository.getCategories()
+        categories.add("random")
+        return categories
+    }
 }

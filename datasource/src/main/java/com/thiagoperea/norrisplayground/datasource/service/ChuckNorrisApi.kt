@@ -13,5 +13,5 @@ interface ChuckNorrisApi {
     suspend fun getJokeFromCategory(@Query("category") category: String): Joke
 
     @GET("categories")
-    suspend fun getCategories(): List<String>
+    suspend fun getCategories(): MutableList<String>
 }

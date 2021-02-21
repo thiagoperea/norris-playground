@@ -1,6 +1,8 @@
 package com.thiagoperea.norrisplayground.datasource.model
 
-class Joke {
+import com.google.gson.annotations.SerializedName
 
-    val description: String = ""
-}
+data class Joke(
+    val id: String,
+    @SerializedName("value") val description: String
+)

@@ -7,15 +7,13 @@ class JokesRepository(
     private val chuckNorrisApi: ChuckNorrisApi
 ) {
 
-    suspend fun getCategories(): List<String> {
-        return listOf()
-    }
+    suspend fun getCategories() = mutableListOf(
+        "Category A",
+        "Category B",
+        "Category C"
+    )
 
-    fun getRandomJoke(): Joke {
-        return Joke()
-    }
+    suspend fun getRandomJoke() = Joke("FAKE_ID", "Joke Description")
 
-    fun getJokeFromCategory(category: String): Joke {
-        return Joke()
-    }
+    suspend fun getJokeFromCategory(category: String) = Joke("FAKE_ID", "Joke from $category")
 }

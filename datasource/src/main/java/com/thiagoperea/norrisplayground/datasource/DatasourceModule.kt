@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val datasourceModule = module {
-    single { JokesRepository() }
+    single { JokesRepository(get()) }
 
     single {
         Retrofit.Builder()

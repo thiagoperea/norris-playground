@@ -1,6 +1,5 @@
 package com.thiagoperea.norrisplayground.presentation.screens.main
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,14 +30,12 @@ class MainViewModel(
                 val jokeItem = getJokesUseCase.execute(selectedCategory)
                 doOnSuccess(jokeItem)
             } catch (error: Exception) {
-                doOnError(error)
+                doOnError(true)
             }
         }
     }
 
-    private fun doOnSuccess(jokeItem: JokeItem) {
-        Log.d("TESTE_THI", "SUCCESS: $jokeItem")
-
+    fun doOnSuccess(jokeItem: JokeItem) {
         jokeItem.image = when (jokeItem.image) {
             0 -> R.raw.a
             1 -> R.raw.b
@@ -48,28 +45,30 @@ class MainViewModel(
             else -> throw UnsupportedOperationException()
         }
 
-        _mainState.postValue(MainState.SuccessJokes(jokeItem))
+        _mainState.postValue(MainState.SuccessJoke(jokeItem))
     }
 
-    private fun doOnError(error: Exception) {
-        Log.e("TESTE_THI", "ERROR: $error")
-
-        _mainState.postValue(MainState.Error)
+    private fun doOnError(isJokeError: Boolean) {
+        _mainState.postValue(MainState.Error(isJokeError))
     }
 
     fun getCategories() {
         viewModelScope.launch(Dispatchers.IO) {
             _mainState.postValue(MainState.Loading(R.string.loading_categories))
 
-            val categories = getCategoriesUseCase.execute()
-            _mainState.postValue(MainState.SuccessCategories(categories))
+            try {
+                val categories = getCategoriesUseCase.execute()
+                _mainState.postValue(MainState.SuccessCategories(categories))
+            } catch (error: Exception) {
+                doOnError(false)
+            }
         }
     }
 }
 
 sealed class MainState {
     data class Loading(@StringRes val message: Int) : MainState()
-    data class SuccessJokes(val joke: JokeItem) : MainState()
+    data class SuccessJoke(val joke: JokeItem) : MainState()
     data class SuccessCategories(val categories: List<String>) : MainState()
-    object Error : MainState()
+    data class Error(val isJokeError: Boolean) : MainState()
 }

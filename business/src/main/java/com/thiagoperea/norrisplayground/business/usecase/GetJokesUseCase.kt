@@ -9,7 +9,7 @@ class GetJokesUseCase(
 ) {
 
     suspend fun execute(category: String?): JokeItem {
-        val joke = if (category.isNullOrEmpty()) {
+        val joke = if (category.isNullOrEmpty() || category == "random") {
             jokesRepository.getRandomJoke()
         } else {
             jokesRepository.getJokeFromCategory(category)
