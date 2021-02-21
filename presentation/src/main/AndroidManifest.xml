@@ -4,7 +4,7 @@
 
     <application>
 
-        <activity android:name=".screens.MainActivity">
+        <activity android:name=".screens.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
